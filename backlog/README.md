@@ -6,10 +6,11 @@ starts or is completed.
 
 Items in this backlog:
 
-- [Review project documentation and references](./documentation-identity.md)
-- [Make the platform private and login-only](./private-platform.md)
+- [Platform visual identity and user-facing text](./visual-identity.md)
+- [Project documentation and communication channels](./documentation-identity.md)
+- [Instance configuration, access, and operations](./private-platform.md)
 
-The README branding update is already implemented; this backlog tracks the
-remaining follow-up work. References to Misskey that are required for upstream
-attribution, licensing, protocol compatibility, package names, or technical
-instructions should be retained where appropriate.
+The README introduction is already updated. These items describe remaining
+areas to inspect and align with OG Lab. References to Misskey required for
+upstream attribution, licensing, protocol compatibility, package names, or
+technical instructions should be retained where appropriate.
