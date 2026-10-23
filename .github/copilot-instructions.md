@@ -34,6 +34,10 @@
   CI は `--ci` で SPDX 行の有無を検査し、既定モードは加えて `.vue` / `.html` のコメント形式を検査する。
 
 - **`locales/ja-JP.yml` 以外の locale YAML を編集しない**。他言語ファイル (`en-US.yml` など `ja-JP.yml` 以外すべて) は Crowdin の自動配信先で、手動編集すると次の同期で上書き喪失する。
+  - OG Lab fork は Misskey/Crowdin の管理者権限・連絡先を持たない。`pt-BR` や翻訳対応で upstream/Crowdin 管理者の許可・設定変更・作業を必要とする提案をしない。
+  - OG Lab はブラジル向けポルトガル語のみを対象にし、Crowdin/runtime i18n を段階的に除去する。移行対象 UI はブラジルポルトガル語の直接テキストを使い、新しい locale key を追加しない。
+  - 未移行 UI がある間は共通 i18n runtime、locale files、Crowdin 設定を残す。全画面の依存を確認するまでグローバル基盤を削除しない。
+  - upstream Misskey/Crowdin 管理者のアクセス・許可・設定・作業を前提としない。他言語 locale YAML を手動編集しない。
 - **マージ済 migration を編集しない**。`packages/backend/migration/{timestamp}-*.js` のうち既に `develop` / `master` に入ったものは絶対に変更しない。スキーマ変更が必要なら新しい timestamp で新規ファイルを追加し、`up()` と `down()` の両方を実装する。
 - **secrets / 認証情報をリポジトリにコミットしない** (`.config/*.yml` の本番値、`.env` ファイル、API token、private key 等)。
 

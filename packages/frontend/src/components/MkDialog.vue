@@ -4,7 +4,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 -->
 
 <template>
-<MkModal ref="modal" :preferType="'dialog'" :zPriority="'high'" @click="done(true)" @closed="emit('closed')" @esc="cancel()">
+<MkModal ref="modal" :preferType="'dialog'" :zPriority="'high'" :class="{ ogLabAuthTheme: props.ogLabAuthTheme }" @click="done(true)" @closed="emit('closed')" @esc="cancel()">
 	<div :class="$style.root">
 		<div v-if="icon" :class="$style.icon">
 			<i :class="icon"></i>
@@ -89,11 +89,13 @@ const props = withDefaults(defineProps<{
 	cancelableByBgClick?: boolean;
 	okText?: string;
 	cancelText?: string;
+	ogLabAuthTheme?: boolean;
 }>(), {
 	type: 'info',
 	showOkButton: true,
 	showCancelButton: false,
 	cancelableByBgClick: true,
+	ogLabAuthTheme: false,
 });
 
 const emit = defineEmits<{

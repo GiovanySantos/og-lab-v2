@@ -19,23 +19,22 @@ SPDX-License-Identifier: AGPL-3.0-only
 				<div><MkCondensedLine :minScale="2 / 3">{{ acct }}</MkCondensedLine></div>
 			</div>
 		</div>
-		<img v-if="deviceMotionPermissionNeeded" v-flip :class="$style.logo" :src="misskeysvg" alt="Misskey Logo" @click="requestDeviceMotion"/>
-		<img v-else v-flip :class="$style.logo" :src="misskeysvg" alt="Misskey Logo"/>
+		<button v-if="deviceMotionPermissionNeeded" v-flip type="button" class="_button" :class="$style.logoButton" aria-label="Logotipo AUTHENTIC OG LAB BY FPUNK; ativar rotação automática do QR code" @click="requestDeviceMotion">
+			<img :class="$style.logo" :src="ogLabLogo" alt="Logotipo AUTHENTIC OG LAB BY FPUNK">
+		</button>
+		<img v-else v-flip :class="$style.logo" :src="ogLabLogo" alt="Logotipo AUTHENTIC OG LAB BY FPUNK"/>
 	</div>
 </div>
 </template>
 
 <script lang="ts" setup>
-import tinycolor from 'tinycolor2';
 import QRCodeStyling from 'qr-code-styling';
 import { computed, ref, shallowRef, watch, onMounted, onUnmounted, useTemplateRef } from 'vue';
 import { url, host } from '@@/js/config.js';
 import type { Directive } from 'vue';
-import { instance } from '@/instance.js';
 import { ensureSignin } from '@/i.js';
 import { userPage, userName } from '@/filters/user.js';
-import misskeysvg from '/client-assets/misskey.svg';
-import { getStaticImageUrl } from '@/utility/media-proxy.js';
+import ogLabLogo from '/client-assets/oglab-logo.png';
 import { i18n } from '@/i18n.js';
 
 const $i = ensureSignin();
@@ -51,9 +50,6 @@ const canShare = computed(() => navigator.canShare && navigator.canShare(shareDa
 
 const qrCodeEl = useTemplateRef('qrCodeEl');
 
-const qrColor = computed(() => tinycolor(instance.themeColor ?? '#86b300'));
-const qrHsl = computed(() => qrColor.value.toHsl());
-
 function share() {
 	if (!canShare.value) return;
 	return navigator.share(shareData.value);
@@ -65,7 +61,7 @@ const qrCodeInstance = new QRCodeStyling({
 	margin: 42,
 	type: 'canvas',
 	data: `${url}/users/${$i.id}`,
-	image: instance.iconUrl ? getStaticImageUrl(instance.iconUrl) : '/favicon.ico',
+	image: ogLabLogo,
 	qrOptions: {
 		typeNumber: 0,
 		mode: 'Byte',
@@ -79,7 +75,7 @@ const qrCodeInstance = new QRCodeStyling({
 	},
 	dotsOptions: {
 		type: 'dots',
-		color: tinycolor(`hsl(${qrHsl.value.h}, 100, 18)`).toRgbString(),
+		color: '#24211D',
 	},
 	cornersDotOptions: {
 		type: 'dot',
@@ -88,7 +84,7 @@ const qrCodeInstance = new QRCodeStyling({
 		type: 'extra-rounded',
 	},
 	backgroundOptions: {
-		color: tinycolor(`hsl(${qrHsl.value.h}, 100, 97)`).toRgbString(),
+		color: '#E7D7B8',
 	},
 });
 
@@ -215,6 +211,24 @@ $avatarSize: 58px;
 	width: 100px;
 	margin: $s3 auto 0;
 	filter: drop-shadow(0 0 6px #0007);
+}
+
+.logoButton {
+	display: block;
+	margin: $s3 auto 0;
+	padding: 0;
+	border: 0;
+	border-radius: var(--MI-radius);
+	background: transparent;
+
+	&:focus-visible {
+		outline: 2px solid var(--MI_THEME-focus);
+		outline-offset: 4px;
+	}
+
+	.logo {
+		margin: 0 auto;
+	}
 }
 </style>
 

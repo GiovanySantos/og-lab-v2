@@ -9,10 +9,6 @@ SPDX-License-Identifier: AGPL-3.0-only
 	<XTimeline :class="$style.tl"/>
 	<div :class="$style.shape1"></div>
 	<div :class="$style.shape2"></div>
-	<div :class="$style.logoWrapper">
-		<div :class="$style.poweredBy">Powered by</div>
-		<img :src="misskeysvg" :class="$style.misskey"/>
-	</div>
 	<div :class="$style.contents">
 		<MkVisitorDashboard/>
 	</div>
@@ -34,7 +30,6 @@ import * as Misskey from 'misskey-js';
 import XTimeline from './welcome.timeline.vue';
 import MkMarqueeText from '@/components/MkMarqueeText.vue';
 import MkFeaturedPhotos from '@/components/MkFeaturedPhotos.vue';
-import misskeysvg from '/client-assets/misskey.svg';
 import { misskeyApiGet } from '@/utility/misskey-api.js';
 import MkVisitorDashboard from '@/components/MkVisitorDashboard.vue';
 import { getProxiedImageUrl } from '@/utility/media-proxy.js';
@@ -64,6 +59,30 @@ misskeyApiGet('federation/instances', {
 	height: 100cqh;
 	overflow: auto;
 	overscroll-behavior: contain;
+	background: var(--MI_THEME-bg);
+	color: var(--MI_THEME-fg);
+	--MI_THEME-bg: #24211D;
+	--MI_THEME-panel: #302B25;
+	--MI_THEME-panelHighlight: #383229;
+	--MI_THEME-fg: #E7D7B8;
+	--MI_THEME-fgHighlighted: #E7D7B8;
+	--MI_THEME-fgOnPanel: #E7D7B8;
+	--MI_THEME-accent: #D87536;
+	--MI_THEME-fgOnAccent: #24211D;
+	--MI_THEME-buttonGradateA: #D87536;
+	--MI_THEME-buttonGradateB: #D87536;
+	--MI_THEME-buttonBg: #3B342A;
+	--MI_THEME-buttonHoverBg: #484031;
+	--MI_THEME-divider: color-mix(in srgb, #E7D7B8 16%, transparent);
+	--MI_THEME-focus: #B99558;
+	--MI_THEME-link: #7DB8C9;
+	--MI_THEME-success: #9BC28B;
+	--MI_THEME-warn: #E3BB73;
+	--MI_THEME-error: #F28B82;
+	--MI_THEME-shadow: rgb(0 0 0 / 45%);
+	--oglab-ochre: #B99558;
+	--MI_THEME-header: color-mix(in srgb, #24211D 92%, transparent);
+	--MI_THEME-windowHeader: color-mix(in srgb, #302B25 92%, transparent);
 }
 
 .bg {
@@ -110,32 +129,10 @@ misskeyApiGet('federation/instances', {
 	left: 0;
 	width: 100vw;
 	height: 100vh;
-	background: var(--MI_THEME-accent);
+	background: var(--oglab-ochre);
 	clip-path: polygon(0% 0%, 25% 0%, 35% 100%, 0% 100%);
 	opacity: 0.5;
 	pointer-events: none; // 装飾レイヤ。ホイール操作を透過させる (→ .bg 参照)
-}
-
-.logoWrapper {
-	position: fixed;
-	top: 36px;
-	left: 36px;
-	flex: auto;
-	color: #fff;
-	user-select: none;
-	pointer-events: none;
-}
-
-.poweredBy {
-	margin-bottom: 2px;
-}
-
-.misskey {
-	width: 120px;
-
-	@media (max-width: 450px) {
-		width: 100px;
-	}
 }
 
 .contents {
@@ -156,6 +153,7 @@ misskeyApiGet('federation/instances', {
 	right: 0;
 	margin: auto;
 	background: color(from var(--MI_THEME-panel) srgb r g b / 0.5);
+	color: var(--MI_THEME-fg);
 	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
 	backdrop-filter: var(--MI-blur, blur(15px));
 	border-radius: 999px;

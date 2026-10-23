@@ -6,57 +6,50 @@ SPDX-License-Identifier: AGPL-3.0-only
 <template>
 <div>
 	<div :class="$style.banner">
-		<i class="ti ti-checklist"></i>
+		<img :src="ogLabLogo" alt="AUTHENTIC OG LAB BY FPUNK" :class="$style.logo"/>
 	</div>
 	<div class="_spacer" style="--MI_SPACER-min: 20px; --MI_SPACER-max: 28px;">
 		<div class="_gaps_m">
-			<div v-if="instance.disableRegistration || instance.federation !== 'all'" class="_gaps_s">
-				<MkInfo v-if="instance.disableRegistration" warn>{{ i18n.ts.invitationRequiredToRegister }}</MkInfo>
-				<MkInfo v-if="instance.federation === 'specified'" warn>{{ i18n.ts.federationSpecified }}</MkInfo>
-				<MkInfo v-else-if="instance.federation === 'none'" warn>{{ i18n.ts.federationDisabled }}</MkInfo>
-			</div>
-
-			<div style="text-align: center;">
-				<div>{{ i18n.ts.pleaseConfirmBelowBeforeSignup }}</div>
-				<div style="font-weight: bold; margin-top: 0.5em;">{{ i18n.ts.beSureToReadThisAsItIsImportant }}</div>
+			<div :class="$style.intro">
+				<h2 :class="$style.title">Leia nossas regras antes de se registrar</h2>
 			</div>
 
 			<MkFolder v-if="availableServerRules" :defaultOpen="true">
-				<template #label>{{ i18n.ts.serverRules }}</template>
+				<template #label>Regras do servidor</template>
 				<template #suffix><i v-if="agreeServerRules" class="ti ti-check" style="color: var(--MI_THEME-success)"></i></template>
 
 				<ol class="_gaps_s" :class="$style.rules">
 					<li v-for="item in instance.serverRules" :class="$style.rule"><div :class="$style.ruleText" v-html="item"></div></li>
 				</ol>
 
-				<MkSwitch :modelValue="agreeServerRules" style="margin-top: 16px;" @update:modelValue="updateAgreeServerRules">{{ i18n.ts.agree }}</MkSwitch>
+				<MkSwitch :modelValue="agreeServerRules" style="margin-top: 16px;" @update:modelValue="updateAgreeServerRules">Li e concordo</MkSwitch>
 			</MkFolder>
 
 			<MkFolder v-if="availableTos || availablePrivacyPolicy" :defaultOpen="true">
 				<template #label>{{ tosPrivacyPolicyLabel }}</template>
 				<template #suffix><i v-if="agreeTosAndPrivacyPolicy" class="ti ti-check" style="color: var(--MI_THEME-success)"></i></template>
 				<div class="_gaps_s">
-					<div v-if="availableTos"><a :href="instance.tosUrl ?? undefined" class="_link" target="_blank">{{ i18n.ts.termsOfService }} <i class="ti ti-external-link"></i></a></div>
-					<div v-if="availablePrivacyPolicy"><a :href="instance.privacyPolicyUrl ?? undefined" class="_link" target="_blank">{{ i18n.ts.privacyPolicy }} <i class="ti ti-external-link"></i></a></div>
+					<div v-if="availableTos"><a :href="instance.tosUrl ?? undefined" class="_link" target="_blank" rel="noopener noreferrer">Termos de serviço <i class="ti ti-external-link"></i></a></div>
+					<div v-if="availablePrivacyPolicy"><a :href="instance.privacyPolicyUrl ?? undefined" class="_link" target="_blank" rel="noopener noreferrer">Política de privacidade <i class="ti ti-external-link"></i></a></div>
 				</div>
 
-				<MkSwitch :modelValue="agreeTosAndPrivacyPolicy" style="margin-top: 16px;" @update:modelValue="updateAgreeTosAndPrivacyPolicy">{{ i18n.ts.agree }}</MkSwitch>
+				<MkSwitch :modelValue="agreeTosAndPrivacyPolicy" style="margin-top: 16px;" @update:modelValue="updateAgreeTosAndPrivacyPolicy">Li e concordo</MkSwitch>
 			</MkFolder>
 
 			<MkFolder :defaultOpen="true">
-				<template #label>{{ i18n.ts.basicNotesBeforeCreateAccount }}</template>
+				<template #label>Termo de adesão do OG Lab</template>
 				<template #suffix><i v-if="agreeNote" class="ti ti-check" style="color: var(--MI_THEME-success)"></i></template>
 
-				<a href="https://misskey-hub.net/docs/for-users/onboarding/warning/" class="_link" target="_blank">{{ i18n.ts.basicNotesBeforeCreateAccount }} <i class="ti ti-external-link"></i></a>
+				<a href="/oglab-terms" class="_link" target="_blank" rel="noopener noreferrer">Ler o termo de adesão do OG Lab <i class="ti ti-external-link"></i></a>
 
-				<MkSwitch :modelValue="agreeNote" style="margin-top: 16px;" data-testid="signup-rules-notes-agree" @update:modelValue="updateAgreeNote">{{ i18n.ts.agree }}</MkSwitch>
+				<MkSwitch :modelValue="agreeNote" style="margin-top: 16px;" data-testid="signup-rules-notes-agree" @update:modelValue="updateAgreeNote">Li e concordo</MkSwitch>
 			</MkFolder>
 
-			<div v-if="!agreed" style="text-align: center;">{{ i18n.ts.pleaseAgreeAllToContinue }}</div>
+			<div v-if="!agreed" :class="$style.consentPrompt">Leia e aceite todos os itens para continuar.</div>
 
 			<div class="_buttonsCenter">
-				<MkButton inline rounded @click="emit('cancel')">{{ i18n.ts.cancel }}</MkButton>
-				<MkButton inline primary rounded gradate :disabled="!agreed" data-testid="signup-rules-continue" @click="emit('done')">{{ i18n.ts.continue }} <i class="ti ti-arrow-right"></i></MkButton>
+				<MkButton inline rounded @click="emit('cancel')">Cancelar</MkButton>
+				<MkButton inline primary rounded gradate :disabled="!agreed" data-testid="signup-rules-continue" @click="emit('done')">Continuar <i class="ti ti-arrow-right"></i></MkButton>
 			</div>
 		</div>
 	</div>
@@ -66,11 +59,10 @@ SPDX-License-Identifier: AGPL-3.0-only
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { instance } from '@/instance.js';
-import { i18n } from '@/i18n.js';
+import ogLabLogo from '/client-assets/oglab-logo.png';
 import MkButton from '@/components/MkButton.vue';
 import MkFolder from '@/components/MkFolder.vue';
 import MkSwitch from '@/components/MkSwitch.vue';
-import MkInfo from '@/components/MkInfo.vue';
 import * as os from '@/os.js';
 
 const availableServerRules = instance.serverRules.length > 0;
@@ -92,11 +84,11 @@ const emit = defineEmits<{
 
 const tosPrivacyPolicyLabel = computed(() => {
 	if (availableTos && availablePrivacyPolicy) {
-		return i18n.ts.tosAndPrivacyPolicy;
+		return 'Termos de serviço e política de privacidade';
 	} else if (availableTos) {
-		return i18n.ts.termsOfService;
+		return 'Termos de serviço';
 	} else if (availablePrivacyPolicy) {
-		return i18n.ts.privacyPolicy;
+		return 'Política de privacidade';
 	} else {
 		return '';
 	}
@@ -106,8 +98,11 @@ async function updateAgreeServerRules(v: boolean) {
 	if (v) {
 		const confirm = await os.confirm({
 			type: 'question',
-			title: i18n.ts.doYouAgree,
-			text: i18n.tsx.iHaveReadXCarefullyAndAgree({ x: i18n.ts.serverRules }),
+			title: 'Confirmar aceite',
+			text: 'Li e concordo com as regras do servidor.',
+			okText: 'Concordo',
+			cancelText: 'Cancelar',
+			ogLabAuthTheme: true,
 		});
 		if (confirm.canceled) return;
 		agreeServerRules.value = true;
@@ -120,10 +115,11 @@ async function updateAgreeTosAndPrivacyPolicy(v: boolean) {
 	if (v) {
 		const confirm = await os.confirm({
 			type: 'question',
-			title: i18n.ts.doYouAgree,
-			text: i18n.tsx.iHaveReadXCarefullyAndAgree({
-				x: tosPrivacyPolicyLabel.value,
-			}),
+			title: 'Confirmar aceite',
+			text: `Li e concordo com ${tosPrivacyPolicyLabel.value.toLocaleLowerCase('pt-BR')}.`,
+			okText: 'Concordo',
+			cancelText: 'Cancelar',
+			ogLabAuthTheme: true,
 		});
 		if (confirm.canceled) return;
 		agreeTosAndPrivacyPolicy.value = true;
@@ -136,8 +132,11 @@ async function updateAgreeNote(v: boolean) {
 	if (v) {
 		const confirm = await os.confirm({
 			type: 'question',
-			title: i18n.ts.doYouAgree,
-			text: i18n.tsx.iHaveReadXCarefullyAndAgree({ x: i18n.ts.basicNotesBeforeCreateAccount }),
+			title: 'Confirmar aceite',
+			text: 'Li e concordo com o termo de adesão do OG Lab.',
+			okText: 'Concordo',
+			cancelText: 'Cancelar',
+			ogLabAuthTheme: true,
 		});
 		if (confirm.canceled) return;
 		agreeNote.value = true;
@@ -149,11 +148,33 @@ async function updateAgreeNote(v: boolean) {
 
 <style lang="scss" module>
 .banner {
-	padding: 16px;
+	padding: 12px 16px;
 	text-align: center;
-	font-size: 26px;
-	background-color: var(--MI_THEME-accentedBg);
-	color: var(--MI_THEME-accent);
+	background-color: var(--MI_THEME-panel);
+	border-bottom: 1px solid var(--MI_THEME-divider);
+}
+
+.logo {
+	display: block;
+	width: min(180px, 60vw);
+	max-height: 116px;
+	margin: 0 auto;
+	object-fit: contain;
+}
+
+.intro {
+	text-align: center;
+}
+
+.title {
+	margin: 0;
+	font-size: 1.2rem;
+	line-height: 1.4;
+}
+
+.consentPrompt {
+	text-align: center;
+	color: var(--MI_THEME-warn);
 }
 
 .rules {

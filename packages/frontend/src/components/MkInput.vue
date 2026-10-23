@@ -13,6 +13,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 			v-model="v"
 			v-adaptive-border
 			:class="$style.inputCore"
+			:aria-label="ariaLabel"
 			:type="type"
 			:disabled="disabled"
 			:required="required"
@@ -68,6 +69,7 @@ const props = defineProps<{
 	readonly?: boolean;
 	disabled?: boolean;
 	pattern?: string;
+	ariaLabel?: string;
 	placeholder?: string;
 	autofocus?: boolean;
 	autocomplete?: string;

@@ -9,11 +9,12 @@ SPDX-License-Identifier: AGPL-3.0-only
 	:preferType="'dialog'"
 	@click="onClose"
 	@closed="emit('closed')"
+	@esc="onClose"
 >
-	<div :class="$style.root">
+	<div class="ogLabAuthTheme" :class="$style.root">
 		<div :class="$style.header">
-			<div :class="$style.headerText"><i class="ti ti-login-2"></i> {{ i18n.ts.login }}</div>
-			<button :class="$style.closeButton" class="_button" @click="onClose"><i class="ti ti-x"></i></button>
+			<div :class="$style.headerText"><i class="ti ti-login-2"></i> Entrar</div>
+			<button type="button" :class="$style.closeButton" class="_button" aria-label="Fechar modal de login" @click="onClose"><i class="ti ti-x"></i></button>
 		</div>
 		<div :class="$style.content">
 			<MkSignin :autoSet="autoSet" :message="message" :openOnRemote="openOnRemote" :initialUsername="initialUsername" @login="onLogin"/>
@@ -28,7 +29,6 @@ import { useTemplateRef } from 'vue';
 import type { OpenOnRemoteOptions } from '@/utility/please-login.js';
 import MkSignin from '@/components/MkSignin.vue';
 import MkModal from '@/components/MkModal.vue';
-import { i18n } from '@/i18n.js';
 
 withDefaults(defineProps<{
 	autoSet?: boolean;
@@ -105,5 +105,11 @@ function onLogin(res: Misskey.entities.SigninFlowResponse & { finished: true }) 
 .content {
 	padding: 32px;
 	box-sizing: border-box;
+}
+
+@media (max-width: 400px) {
+	.content {
+		padding: 20px;
+	}
 }
 </style>
