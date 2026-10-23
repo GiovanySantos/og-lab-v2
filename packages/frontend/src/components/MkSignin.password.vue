@@ -6,11 +6,11 @@ SPDX-License-Identifier: AGPL-3.0-only
 <template>
 <div :class="$style.wrapper" data-testid="signin-page-password">
 	<div class="_gaps" :class="$style.root">
-		<div :class="$style.avatar" :style="{ backgroundImage: user ? `url('${user.avatarUrl}')` : undefined }"></div>
+		<div :class="$style.avatar" :style="{ backgroundImage: user ? `url('${user.avatarUrl}')` : undefined }" aria-hidden="true">
+			<i v-if="!user.avatarUrl" class="ti ti-user"></i>
+		</div>
 		<div :class="$style.welcomeBackMessage">
-			<I18n :src="i18n.ts.welcomeBackWithName" tag="span">
-				<template #name><Mfm :text="user.name ?? user.username" :plain="true"/></template>
-			</I18n>
+			Bem-vindo de volta, <Mfm :text="user.name ?? user.username" :plain="true"/>
 		</div>
 
 		<!-- password入力 -->
@@ -18,9 +18,9 @@ SPDX-License-Identifier: AGPL-3.0-only
 			<!-- ブラウザ オートコンプリート用 -->
 			<input type="hidden" name="username" autocomplete="username" :value="user.username">
 
-			<MkInput v-model="password" :placeholder="i18n.ts.password" type="password" autocomplete="current-password webauthn" :withPasswordToggle="true" required autofocus data-testid="signin-password">
+			<MkInput v-model="password" ariaLabel="Senha" placeholder="Senha" type="password" autocomplete="current-password webauthn" :withPasswordToggle="true" required autofocus data-testid="signin-password">
 				<template #prefix><i class="ti ti-lock"></i></template>
-				<template #caption><button class="_textButton" type="button" @click="resetPassword">{{ i18n.ts.forgotPassword }}</button></template>
+				<template #caption><button class="_textButton" type="button" @click="resetPassword">Esqueci minha senha</button></template>
 			</MkInput>
 
 			<div v-if="needCaptcha">
@@ -31,7 +31,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 				<MkCaptcha v-if="instance.enableTestcaptcha" ref="testcaptcha" v-model="testcaptchaResponse" provider="testcaptcha" :sitekey="null"/>
 			</div>
 
-			<MkButton type="submit" :disabled="needCaptcha && captchaFailed" large primary rounded style="margin: 0 auto;" data-testid="signin-page-password-continue">{{ i18n.ts.continue }} <i class="ti ti-arrow-right"></i></MkButton>
+			<MkButton type="submit" :disabled="needCaptcha && captchaFailed" large primary rounded style="margin: 0 auto;" data-testid="signin-page-password-continue">Continuar <i class="ti ti-arrow-right"></i></MkButton>
 		</form>
 	</div>
 </div>
@@ -55,7 +55,6 @@ import { ref, computed, useTemplateRef, defineAsyncComponent } from 'vue';
 import * as Misskey from 'misskey-js';
 
 import { instance } from '@/instance.js';
-import { i18n } from '@/i18n.js';
 import * as os from '@/os.js';
 
 import MkButton from '@/components/MkButton.vue';
@@ -141,9 +140,13 @@ defineExpose({
 
 .avatar {
 	margin: 0 auto 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	width: 64px;
 	height: 64px;
-	background: #ddd;
+	background-color: color-mix(in srgb, var(--MI_THEME-fg), transparent 85%);
+	color: color-mix(in srgb, var(--MI_THEME-fg), transparent 25%);
 	background-position: center;
 	background-size: cover;
 	border-radius: 100%;

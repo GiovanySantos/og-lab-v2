@@ -187,7 +187,7 @@
 			<p>${messages.solution2}</p>
 			<p>${messages.solution3}</p>
 			<p>${messages.solution4}</p>
-			<details style="color: #86b300;">
+			<details style="color: #E3BB73;">
 				<summary>${messages.otherOption}</summary>
 				<a href="${safeModeUrl}">
 					<button class="button-small">
@@ -239,8 +239,8 @@
 
 		body,
 		html {
-			background-color: #222;
-			color: #dfddcc;
+			background-color: #24211D;
+			color: #E7D7B8;
 			justify-content: center;
 			margin: auto;
 			padding: 10px;
@@ -256,38 +256,38 @@
 		}
 
 		.button-big {
-			background: linear-gradient(90deg, rgb(134, 179, 0), rgb(74, 179, 0));
+			background: #D87536;
 			line-height: 50px;
 		}
 
 		.button-big:hover {
-			background: rgb(153, 204, 0);
+			background: #E08A52;
 		}
 
 		.button-small {
-			background: #444;
+			background: #3B342A;
 			line-height: 40px;
 		}
 
 		.button-small:hover {
-			background: #555;
+			background: #484031;
 		}
 
 		.button-label-big {
-			color: #222;
+			color: #24211D;
 			font-weight: bold;
 			font-size: 1.2em;
 			padding: 12px;
 		}
 
 		.button-label-small {
-			color: rgb(153, 204, 0);
+			color: #E3BB73;
 			font-size: 16px;
 			padding: 12px;
 		}
 
 		a {
-			color: rgb(134, 179, 0);
+			color: #E3BB73;
 			text-decoration: none;
 		}
 
@@ -297,7 +297,7 @@
 		}
 
 		.icon-warning {
-			color: #dec340;
+			color: #E3BB73;
 			height: 4rem;
 			padding-top: 2rem;
 		}
@@ -312,7 +312,7 @@
 		}
 
 		#errorInfo {
-			background: #333;
+			background: #302B25;
 			margin-bottom: 2rem;
 			padding: 0.5rem 1rem;
 			width: 40rem;

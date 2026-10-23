@@ -4,11 +4,11 @@ SPDX-License-Identifier: AGPL-3.0-only
 -->
 
 <template>
-<PageWithAnimBg>
+<PageWithAnimBg class="ogLabAuthTheme">
 	<div :class="$style.formContainer">
 		<form :class="$style.form" class="_panel" @submit.prevent="submit()">
 			<div :class="$style.banner">
-				<i class="ti ti-user-check"></i>
+				<img :src="ogLabLogo" alt="Logotipo AUTHENTIC OG LAB BY FPUNK" :class="$style.logo">
 			</div>
 			<div class="_gaps_m" style="padding: 32px;">
 				<div>{{ i18n.tsx.clickToFinishEmailVerification({ ok: i18n.ts.gotIt }) }}</div>
@@ -30,6 +30,7 @@ import { i18n } from '@/i18n.js';
 import * as os from '@/os.js';
 import { misskeyApi } from '@/utility/misskey-api.js';
 import { login } from '@/accounts.js';
+import ogLabLogo from '/client-assets/oglab-logo.png';
 
 const submitting = ref(false);
 
@@ -62,6 +63,7 @@ function submit() {
 	min-height: 100svh;
 	padding: 32px 32px 64px 32px;
 	box-sizing: border-box;
+	background: var(--MI_THEME-bg);
 	display: grid;
 	place-content: center;
 }
@@ -76,10 +78,15 @@ function submit() {
 }
 
 .banner {
-	padding: 16px;
+	padding: 24px 16px 8px;
 	text-align: center;
-	font-size: 26px;
-	background-color: var(--MI_THEME-accentedBg);
-	color: var(--MI_THEME-accent);
+}
+
+.logo {
+	display: block;
+	width: 180px;
+	max-width: 100%;
+	height: auto;
+	margin: 0 auto;
 }
 </style>

@@ -263,6 +263,7 @@ export function alert(props: {
 	type?: 'error' | 'info' | 'success' | 'warning' | 'waiting' | 'question';
 	title?: string;
 	text?: string;
+	ogLabAuthTheme?: boolean;
 }): Promise<void> {
 	return new Promise(resolve => {
 		const { dispose } = popup(MkDialog, props, {
@@ -280,6 +281,7 @@ export function confirm(props: {
 	text?: string;
 	okText?: string;
 	cancelText?: string;
+	ogLabAuthTheme?: boolean;
 }): Promise<{ canceled: boolean }> {
 	return new Promise(resolve => {
 		const { dispose } = popup(MkDialog, {

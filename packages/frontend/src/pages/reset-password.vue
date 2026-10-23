@@ -4,15 +4,18 @@ SPDX-License-Identifier: AGPL-3.0-only
 -->
 
 <template>
-<PageWithHeader :actions="headerActions" :tabs="headerTabs">
+<PageWithHeader class="ogLabAuthTheme" :actions="headerActions" :tabs="headerTabs">
 	<div v-if="token" class="_spacer" style="--MI_SPACER-w: 700px; --MI_SPACER-min: 16px; --MI_SPACER-max: 32px;">
-		<div class="_gaps_m">
-			<MkInput v-model="password" type="password">
-				<template #prefix><i class="ti ti-lock"></i></template>
-				<template #label>{{ i18n.ts.newPassword }}</template>
-			</MkInput>
+		<div class="_panel" :class="$style.form">
+			<div class="_gaps_m">
+				<img :src="ogLabLogo" alt="Logotipo AUTHENTIC OG LAB BY FPUNK" :class="$style.logo">
+				<MkInput v-model="password" ariaLabel="Nova senha" type="password">
+					<template #prefix><i class="ti ti-lock"></i></template>
+					<template #label>Nova senha</template>
+				</MkInput>
 
-			<MkButton primary @click="save">{{ i18n.ts.save }}</MkButton>
+				<MkButton rounded primary style="margin: 0 auto;" @click="save">Salvar</MkButton>
+			</div>
 		</div>
 	</div>
 </PageWithHeader>
@@ -23,9 +26,9 @@ import { defineAsyncComponent, onMounted, ref, computed } from 'vue';
 import MkInput from '@/components/MkInput.vue';
 import MkButton from '@/components/MkButton.vue';
 import * as os from '@/os.js';
-import { i18n } from '@/i18n.js';
 import { definePage } from '@/page.js';
 import { mainRouter } from '@/router.js';
+import ogLabLogo from '/client-assets/oglab-logo.png';
 
 const props = defineProps<{
 	token?: string;
@@ -56,7 +59,24 @@ const headerActions = computed(() => []);
 const headerTabs = computed(() => []);
 
 definePage(() => ({
-	title: i18n.ts.resetPassword,
+	title: 'Redefinir senha',
 	icon: 'ti ti-lock',
 }));
 </script>
+
+<style lang="scss" module>
+.form {
+	max-width: 500px;
+	margin: 0 auto;
+	padding: calc(var(--MI-margin) * 2);
+	box-sizing: border-box;
+}
+
+.logo {
+	display: block;
+	width: 100%;
+	max-width: 220px;
+	height: auto;
+	margin: 0 auto;
+}
+</style>

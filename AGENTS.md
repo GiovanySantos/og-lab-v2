@@ -26,6 +26,10 @@
 2. **`locales/ja-JP.yml` 以外の locale YAML を手動編集しない**
    - 他言語ファイル (`en-US.yml` など `ja-JP.yml` 以外すべて) は Crowdin の自動配信先。手動編集すると次の同期で上書き喪失する
    - 根拠: [locales/README.md](locales/README.md) と [crowdin.yml](crowdin.yml) (`ja-JP.yml` → `locales/%locale%.yml` の同期設定)
+   - この fork は Misskey/Crowdin の管理者権限・連絡先を持たない。翻訳や `pt-BR` 対応の解決に upstream/Crowdin 管理者の許可・設定変更・作業を前提とする提案や実装をしない
+   - OG Lab はブラジル向けのポルトガル語のみを対象とし、Crowdin と runtime i18n を段階的に削除する。移行対象 UI は locale key ではなくブラジルポルトガル語の直接テキストを使う
+   - 未移行 UI がある間は共有 i18n runtime / locale files / Crowdin 設定を残す。全画面の依存がなくなったことを検証する前にグローバル基盤を削除しない
+   - upstream Misskey/Crowdin 管理者のアクセス・許可・設定・作業を移行の前提にしない。他言語 locale YAML を手動編集してはならない
 
 3. **マージ済 migration ファイルを編集しない**
    - 対象: `packages/backend/migration/{unixMs}-{name}.js` のうち、既に `develop` / `master` にマージされたもの

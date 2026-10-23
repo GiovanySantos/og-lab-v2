@@ -6,12 +6,14 @@ SPDX-License-Identifier: AGPL-3.0-only
 <template>
 <MkModalWindow
 	ref="dialog"
+	class="ogLabAuthTheme"
 	:width="500"
 	:height="600"
 	@close="onClose"
 	@closed="emit('closed')"
+	@esc="onClose"
 >
-	<template #header>{{ i18n.ts.signup }}</template>
+	<template #header>Criar uma conta</template>
 
 	<div style="overflow-x: clip;">
 		<Transition
@@ -38,7 +40,6 @@ import * as Misskey from 'misskey-js';
 import XSignup from '@/components/MkSignupDialog.form.vue';
 import XServerRules from '@/components/MkSignupDialog.rules.vue';
 import MkModalWindow from '@/components/MkModalWindow.vue';
-import { i18n } from '@/i18n.js';
 
 const props = withDefaults(defineProps<{
 	autoSet?: boolean;

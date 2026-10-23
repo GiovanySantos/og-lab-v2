@@ -6,6 +6,7 @@ starts or is completed.
 
 Items in this backlog:
 
+- [Authentication flow visual redesign](./authentication-visual-redesign.md)
 - [Platform visual identity and user-facing text](./visual-identity.md)
 - [Project documentation and communication channels](./documentation-identity.md)
 - [Instance configuration, access, and operations](./private-platform.md)

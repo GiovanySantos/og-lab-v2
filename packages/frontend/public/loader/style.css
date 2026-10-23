@@ -17,7 +17,7 @@ html {
 	width: 100vw;
 	height: 100vh;
 	cursor: wait;
-	background-color: var(--MI_THEME-bg);
+	background-color: #24211D;
 	opacity: 1;
 	transition: opacity 0.5s ease;
 }
@@ -29,9 +29,9 @@ html {
 	bottom: 0;
 	left: 0;
 	margin: auto;
-	width: 64px;
-	height: 64px;
-	border-radius: 10px;
+	width: 128px;
+	height: 128px;
+	object-fit: contain;
 	pointer-events: none;
 }
 
@@ -45,8 +45,8 @@ html {
 	display: inline-block;
 	width: 28px;
 	height: 28px;
-	transform: translateY(70px);
-	color: var(--MI_THEME-accent);
+	transform: translateY(100px);
+	color: #D87536;
 }
 
 #splashSpinner > .spinner {

@@ -73,7 +73,6 @@ import type { OpenOnRemoteOptions } from '@/utility/please-login.js';
 import type { PwResponse } from '@/components/MkSignin.password.vue';
 import { misskeyApi } from '@/utility/misskey-api.js';
 import { showSuspendedDialog } from '@/utility/show-suspended-dialog.js';
-import { i18n } from '@/i18n.js';
 import * as os from '@/os.js';
 
 import XInput from '@/components/MkSignin.input.vue';
@@ -176,8 +175,9 @@ async function onPasswordSubmitted(pw: PwResponse) {
 	if (userInfo.value == null) {
 		await os.alert({
 			type: 'error',
-			title: i18n.ts.noSuchUser,
-			text: i18n.ts.signinFailed,
+			title: 'Usuário não encontrado',
+			text: 'Não foi possível fazer login. Por favor, verifique o nome de usuário e a senha.',
+			ogLabAuthTheme: true,
 		});
 		waiting.value = false;
 		return;
@@ -200,8 +200,9 @@ async function onTotpSubmitted(token: string) {
 	if (userInfo.value == null) {
 		await os.alert({
 			type: 'error',
-			title: i18n.ts.noSuchUser,
-			text: i18n.ts.signinFailed,
+			title: 'Usuário não encontrado',
+			text: 'Não foi possível fazer login. Por favor, verifique o nome de usuário e a senha.',
+			ogLabAuthTheme: true,
 		});
 		waiting.value = false;
 		return;
@@ -289,16 +290,18 @@ function onSigninApiError(err?: any): void {
 		case '6cc579cc-885d-43d8-95c2-b8c7fc963280': {
 			os.alert({
 				type: 'error',
-				title: i18n.ts.loginFailed,
-				text: i18n.ts.noSuchUser,
+				title: 'Falha ao entrar',
+				text: 'Usuário não encontrado',
+				ogLabAuthTheme: true,
 			});
 			break;
 		}
 		case '932c904e-9460-45b7-9ce6-7ed33be7eb2c': {
 			os.alert({
 				type: 'error',
-				title: i18n.ts.loginFailed,
-				text: i18n.ts.incorrectPassword,
+				title: 'Falha ao entrar',
+				text: 'Senha inválida.',
+				ogLabAuthTheme: true,
 			});
 			break;
 		}
@@ -309,48 +312,54 @@ function onSigninApiError(err?: any): void {
 		case '22d05606-fbcf-421a-a2db-b32610dcfd1b': {
 			os.alert({
 				type: 'error',
-				title: i18n.ts.loginFailed,
-				text: i18n.ts.rateLimitExceeded,
+				title: 'Falha ao entrar',
+				text: 'Limite de tentativas excedido.',
+				ogLabAuthTheme: true,
 			});
 			break;
 		}
 		case 'cdf1235b-ac71-46d4-a3a6-84ccce48df6f': {
 			os.alert({
 				type: 'error',
-				title: i18n.ts.loginFailed,
-				text: i18n.ts.incorrectTotp,
+				title: 'Falha ao entrar',
+				text: 'O código de autenticação está incorreto ou expirou.',
+				ogLabAuthTheme: true,
 			});
 			break;
 		}
 		case '36b96a7d-b547-412d-aeed-2d611cdc8cdc': {
 			os.alert({
 				type: 'error',
-				title: i18n.ts.loginFailed,
-				text: i18n.ts.unknownWebAuthnKey,
+				title: 'Falha ao entrar',
+				text: 'Chave de acesso desconhecida.',
+				ogLabAuthTheme: true,
 			});
 			break;
 		}
 		case '93b86c4b-72f9-40eb-9815-798928603d1e': {
 			os.alert({
 				type: 'error',
-				title: i18n.ts.loginFailed,
-				text: i18n.ts.passkeyVerificationFailed,
+				title: 'Falha ao entrar',
+				text: 'A verificação com chave de acesso falhou.',
+				ogLabAuthTheme: true,
 			});
 			break;
 		}
 		case 'b18c89a7-5b5e-4cec-bb5b-0419f332d430': {
 			os.alert({
 				type: 'error',
-				title: i18n.ts.loginFailed,
-				text: i18n.ts.passkeyVerificationFailed,
+				title: 'Falha ao entrar',
+				text: 'A verificação com chave de acesso falhou.',
+				ogLabAuthTheme: true,
 			});
 			break;
 		}
 		case '2d84773e-f7b7-4d0b-8f72-bb69b584c912': {
 			os.alert({
 				type: 'error',
-				title: i18n.ts.loginFailed,
-				text: i18n.ts.passkeyVerificationSucceededButPasswordlessLoginDisabled,
+				title: 'Falha ao entrar',
+				text: 'A verificação com chave de acesso foi concluída, mas o login sem senha está desativado.',
+				ogLabAuthTheme: true,
 			});
 			break;
 		}
@@ -358,8 +367,9 @@ function onSigninApiError(err?: any): void {
 			console.error(err);
 			os.alert({
 				type: 'error',
-				title: i18n.ts.loginFailed,
+				title: 'Falha ao entrar',
 				text: JSON.stringify(err),
+				ogLabAuthTheme: true,
 			});
 		}
 	}
